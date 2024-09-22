@@ -7,18 +7,18 @@ const Settings = require("../models/settings");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("modmail_ban")
-    .setDescription("Ban a user from the modmail system")
+    .setName("blacklist")
+    .setDescription("Blacklist a user from the modmail system")
     .addUserOption((option) =>
       option
         .setName("target")
-        .setDescription("Who should be modmail banned?")
+        .setDescription("Who should be modmail blacklisted?")
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName("reason")
-        .setDescription("Why are you modmail banning them")
+        .setDescription("Why are you blacklisting them")
         .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
