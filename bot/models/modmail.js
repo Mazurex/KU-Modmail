@@ -9,6 +9,8 @@ const modmailSchema = new mongoose.Schema({
       root_channel_id: { type: String, required: true },
       modmail_message_id: { type: String, required: true },
       timestamp: { type: Date, default: Date.now(), required: true },
+      resolved: { type: Boolean, default: false },
+      thread_id: { type: String, required: true },
     },
   ],
 });

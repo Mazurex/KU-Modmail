@@ -16,7 +16,7 @@ module.exports = {
           { name: "Cooldown in Sec", value: "cooldown" }
         )
     )
-    .addIntegerOption((option) =>
+    .addStringOption((option) =>
       option
         .setName("value")
         .setDescription("The value of the option")
@@ -35,6 +35,12 @@ module.exports = {
           "There was an issue with fetching the database, create a modmail and try again!",
       });
     }
+
+    const channel = interaction.guild.channels.cache.get(value);
+    if (!channel)
+      return interaction.editReply({
+        content: `\`${value}\` doesn't exist!`,
+      });
 
     if (type == "modmail_channel_id") {
       settings.modmail_channel_id = value;
