@@ -51,7 +51,13 @@ module.exports = {
         });
       settings.log_channel_id = value;
     } else if (type == "cooldown") {
-      settings.cooldown_s = value;
+      if (value >= 0) {
+        settings.cooldown_s = value;
+      } else {
+        interaction.editReply({
+          content: "The cooldown cannot be less than 0 seconds!",
+        });
+      }
     }
     interaction.editReply({
       content: `Successfully changed \`${type}\` to \`${value}\``,
