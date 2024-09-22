@@ -40,10 +40,10 @@ module.exports = {
 
   async execute(interaction, client) {
     const modmail_id = interaction.options.getInteger("id");
-    const reason = interaction.options.getString("id");
-    const dm_bool = interaction.options.getBoolean("id");
+    const reason = interaction.options.getString("reason");
+    const dm_bool = interaction.options.getBoolean("dm");
     const dm_content =
-      interaction.options.getString("id") ??
+      interaction.options.getString("dm_message") ??
       "Your ModMail message has been resolved! Unfortunately we are unable to tell you the action taken!";
 
     await interaction.deferReply({ ephemeral: true });
@@ -78,7 +78,7 @@ module.exports = {
       });
     }
 
-    const modmail_message = modmail_channel.messages.fetch(
+    const modmail_message = await modmail_channel.messages.fetch(
       userModmail.modmail_message_id
     );
 
@@ -141,9 +141,9 @@ module.exports = {
       modmail_message.reactions.removeAll().then(() => {
         modmail_message.react("<:unresolved:1287504576651591730>");
       });
-      const resolvedEmbed = new EmbedBuilder()
+      const unresolvedEmbed = new EmbedBuilder()
         .setTitle(
-          `${userModmail.modmail_id} || Resolved <:resolved:1287504564190187531>`
+          `${userModmail.modmail_id} || Unresolved <:unresolved:1287504576651591730>`
         )
         .setDescription(
           "This thread has been unresolved, meaning it is no longer archived and is open again, if this was a mistake, run the same /resolve command to undo it"
@@ -154,7 +154,7 @@ module.exports = {
         })
         .setColor("Red")
         .setTimestamp();
-      thread.send({ embeds: [resolvedEmbed] });
+      thread.send({ embeds: [unresolvedEmbed] });
       await thread.setArchived(false);
     }
 

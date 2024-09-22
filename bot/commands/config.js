@@ -25,7 +25,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction, client) {
     const type = interaction.options.getString("type");
-    const value = interaction.options.getInteger("value");
+    const value = interaction.options.getString("value");
     await interaction.deferReply({ ephemeral: true });
 
     let settings = await Settings.findOne();
@@ -36,15 +36,19 @@ module.exports = {
       });
     }
 
-    const channel = interaction.guild.channels.cache.get(value);
-    if (!channel)
-      return interaction.editReply({
-        content: `\`${value}\` doesn't exist!`,
-      });
-
     if (type == "modmail_channel_id") {
+      const channel = interaction.guild.channels.cache.get(value);
+      if (!channel)
+        return interaction.editReply({
+          content: `\`${value}\` doesn't exist!`,
+        });
       settings.modmail_channel_id = value;
     } else if (type == "log_channel_id") {
+      const channel = interaction.guild.channels.cache.get(value);
+      if (!channel)
+        return interaction.editReply({
+          content: `\`${value}\` doesn't exist!`,
+        });
       settings.log_channel_id = value;
     } else if (type == "cooldown") {
       settings.cooldown_s = value;

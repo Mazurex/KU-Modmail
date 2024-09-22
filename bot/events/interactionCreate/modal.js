@@ -70,7 +70,7 @@ module.exports = async (client, interaction) => {
     );
 
     const modmail_embed = await modmailChannel.send({ embeds: [modmailEmbed] });
-    modmailEmbed.react("<:unresolved:1287504576651591730>");
+    modmail_embed.react("<:unresolved:1287504576651591730>");
 
     const thread = await modmail_embed.startThread({
       name: title,
