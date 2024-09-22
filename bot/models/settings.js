@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const settingsSchema = new mongoose.Schema({
-  modmail_channel_id: { type: String, required: true },
+  modmail_channel_id: { type: String },
+  log_channel_id: { type: String },
   cooldown_s: { type: Number, default: 3600, required: true },
   user_modmails: [
     {
@@ -9,7 +10,7 @@ const settingsSchema = new mongoose.Schema({
       last_modmail_timestamp: {
         type: Date,
         required: true,
-        default: Date.now(),
+        timestamp: Date.now(),
       },
     },
   ],

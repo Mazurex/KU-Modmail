@@ -6,7 +6,6 @@ const {
   TextInputStyle,
 } = require("discord.js");
 
-const config = require("../config/channels.json");
 const Settings = require("../models/settings");
 
 module.exports = {
@@ -24,10 +23,13 @@ module.exports = {
     if (!settings) {
       settings = new Settings({
         modmail_channel_id: 0,
+        log_channel_id: 0,
         cooldown_s: 3600,
         user_modmails: [],
       });
     }
+
+    await settings.save();
 
     const bannedUser = settings.banned_users.find(
       (user) => user.user_id === interaction.user.id
@@ -36,6 +38,30 @@ module.exports = {
     if (bannedUser) {
       return interaction.reply({
         content: `You are banned from using ModMail. Reason: \`${bannedUser.reason}\``,
+      });
+    }
+
+    const modmailChannel = interaction.guild.channels.cache.get(
+      settings.modmail_channel_id
+    );
+
+    const loggingChannel = interaction.guild.channels.cache.get(
+      settings.log_channel_id
+    );
+
+    if (!modmailChannel) {
+      return interaction.reply({
+        content:
+          "There was an error with the modmail! Error code `1`, please send this to a moderator!",
+        ephemeral: true,
+      });
+    }
+
+    if (!loggingChannel) {
+      return interaction.reply({
+        content:
+          "There was an error with the modmail! Error code `2`, please send this to a moderator!",
+        ephemeral: true,
       });
     }
 
@@ -69,14 +95,6 @@ module.exports = {
     }
 
     await settings.save();
-
-    if (!interaction.guild.channels.fetch(config.modmail_channel)) {
-      return interaction.reply({
-        content:
-          "There was an error with the modmail! Error code `1`, please send this to a moderator!",
-        ephemeral: true,
-      });
-    }
 
     const modal = new ModalBuilder()
       .setCustomId("modmail")

@@ -3,9 +3,9 @@ const {
   ThreadAutoArchiveDuration,
   ChannelType,
 } = require("discord.js");
-const config = require("../../config/channels.json");
 
 const Modmail = require("../../models/modmail");
+const Settings = require("../../models/settings");
 
 module.exports = async (client, interaction) => {
   if (!interaction.isModalSubmit()) return;
@@ -14,26 +14,39 @@ module.exports = async (client, interaction) => {
     const title = interaction.fields.getTextInputValue("title");
     const content = interaction.fields.getTextInputValue("content");
 
-    const lastModmail = await Modmail.findOne().sort({ index: -1 });
-    const modmail_id = lastModmail ? lastModmail.index + 1 : 1;
+    let modmailData = await Modmail.findOne();
 
-    const modmailData = new Modmail({
-      index: modmail_id,
-      modmails: {
-        modmail_id: modmail_id,
-        sender_id: interaction.user.id,
-        root_channel_id: interaction.channel.id,
-        modmail_message_id: "",
-        timestamp: new Date(),
-      },
-    });
+    if (!modmailData) {
+      modmailData = new Modmail({
+        index: 1,
+        modmails: [],
+      });
+    }
+
+    const modmail_id = modmailData.index + 1;
 
     await modmailData.save();
+
+    const modmailEmbed = new EmbedBuilder()
+      .setTitle(`${interaction.user.username} | ${modmail_id}`)
+      .addFields(
+        { name: "Sender ID", value: interaction.user.id, inline: true },
+        { name: "ModMail ID", value: `${modmail_id}`, inline: true },
+        { name: "Root Channel", value: `<#${interaction.channel.id}>` }
+      )
+      .setFooter({
+        text: "KasaiSora Universe ModMail",
+        iconURL: client.user.displayAvatarURL(),
+      })
+      .setColor("Blurple")
+      .setTimestamp();
+
+    const settings = await Settings.findOne();
 
     const dmEmbed = new EmbedBuilder()
       .setTitle("ModMail Sent")
       .setDescription(
-        `Your ModMail has been successfully sent, you may send another one in <timestamp>\nIf you need to followup, cancel, or modify your ModMail, DM a staff member with the ModMail ID below`
+        `Your ModMail has been successfully sent!\nIf you need to followup, cancel, or modify your ModMail, DM a staff member with the ModMail ID below`
       )
       .addFields(
         { name: "ModMail ID", value: `${modmail_id}`, inline: true },
@@ -52,23 +65,10 @@ module.exports = async (client, interaction) => {
       member.send({ embeds: [dmEmbed] });
     } catch (error) {}
 
-    const modmailEmbed = new EmbedBuilder()
-      .setTitle(`${interaction.user.username} | modmail_id`)
-      .addFields(
-        { name: "Sender ID", value: interaction.user.id, inline: true },
-        { name: "ModMail ID", value: `${modmail_id}`, inline: true },
-        { name: "Root Channel", value: `<#${interaction.channel.id}>` }
-      )
-      .setFooter({
-        text: "KasaiSora Universe ModMail",
-        iconURL: client.user.displayAvatarURL(),
-      })
-      .setColor("Blurple")
-      .setTimestamp();
-
-    const modmailChannel = interaction.guild.channels.cache.get(
-      config.modmail_channel
+    modmailChannel = interaction.guild.channels.cache.get(
+      settings.modmail_channel_id
     );
+
     const modmail_embed = await modmailChannel.send({ embeds: [modmailEmbed] });
 
     const thread = await modmail_embed.startThread({
@@ -79,6 +79,22 @@ module.exports = async (client, interaction) => {
 
     thread.send({
       content: `\`\`\`${content}\`\`\``,
+    });
+
+    modmailData.modmails.push({
+      modmail_id: modmail_id,
+      sender_id: interaction.user.id,
+      root_channel_id: interaction.channel.id,
+      modmail_message_id: modmail_embed.id,
+      timestamp: new Date(),
+    });
+
+    modmailData.index = modmail_id;
+    await modmailData.save();
+
+    await interaction.reply({
+      content: "Your ModMail has been submitted!",
+      ephemeral: true,
     });
   } else if (interaction.customId === "another modal") {
     // Future modal handling
