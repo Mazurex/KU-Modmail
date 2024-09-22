@@ -54,7 +54,7 @@ module.exports = {
       if (value >= 0) {
         settings.cooldown_s = value;
       } else {
-        interaction.editReply({
+        return interaction.editReply({
           content: "The cooldown cannot be less than 0 seconds!",
         });
       }
