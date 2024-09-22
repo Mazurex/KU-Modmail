@@ -20,27 +20,35 @@ module.exports = {
   async execute(interaction, client) {
     const channel =
       interaction.options.getChannel("target_channel") ?? interaction.channel;
+    await interaction.deferReply({ ephemeral: true });
 
-    await interaction.deferReply();
+    try {
+      const button = new ButtonBuilder()
+        .setCustomId("modmail_button")
+        .setLabel("Open ModMail")
+        .setStyle(ButtonStyle.Primary);
 
-    const button = new ButtonBuilder()
-      .setCustomId("modmail_button")
-      .setLabel("Open ModMail")
-      .setStyle(ButtonStyle.Primary);
+      const actionRow = new ActionRowBuilder().addComponents(button);
 
-    const actionRow = new ActionRowBuilder().addComponents(button);
+      const embed = new EmbedBuilder()
+        .setTitle("KasaiSora Universe ModMail")
+        .setDescription(
+          "Press the button **below** to send a ModMail to the staff team, and we will look at it as soon as we can!\n\nModMail Rules:\n**1.** Don't spam ModMail's, you not receiving a followup doesn't mean we haven't looked into it.\n**2.** Be straightforward, but descriptive with your ModMails.\n**3.** Don't ask about the status of your ModMail.\n**4.** Don't misuse ModMails (such as asking for free materials)."
+        )
+        .setFooter({
+          text: "KasaiSora Universe ModMail",
+          iconURL: client.user.displayAvatarURL(),
+        })
+        .setColor("Blurple");
 
-    const embed = new EmbedBuilder()
-      .setTitle("KasaiSora Universe ModMail")
-      .setDescription(
-        "Press the button **below** to send a ModMail to the staff team, and we will look at it as soon as we can!\n\nModMail Rules:\n**1.** Don't spam ModMail's, you not receiving a followup doesn't mean we haven't looked into it.\n**2.** Be straightforward, but descriptive with your ModMails.\n**3.** Don't ask about the status of your ModMail.\n**4.** Don't misuse ModMails (such as asking for free materials)."
-      )
-      .setFooter({
-        text: "KasaiSora Universe ModMail",
-        iconURL: client.user.displayAvatarURL(),
-      })
-      .setColor("Blurple");
+      interaction.channel.send({ embeds: [embed], components: [actionRow] });
+      interaction.editReply({
+        content: `Successfully sent ModMail button in <#${channel}>!`,
+      });
+    } catch (error) {
+      console.error(error);
 
-    interaction.editReply({ embeds: [embed], components: [actionRow] });
+      interaction.editReply({ content: "Invalid channel!" });
+    }
   },
 };
