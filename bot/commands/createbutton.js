@@ -43,7 +43,7 @@ module.exports = {
 
       interaction.channel.send({ embeds: [embed], components: [actionRow] });
       interaction.editReply({
-        content: `Successfully sent ModMail button in <#${channel}>!`,
+        content: `Successfully sent ModMail button in <#${channel.id}>!`,
       });
     } catch (error) {
       console.error(error);

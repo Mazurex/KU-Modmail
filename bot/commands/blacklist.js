@@ -12,7 +12,7 @@ module.exports = {
     .addUserOption((option) =>
       option
         .setName("target")
-        .setDescription("Who should be modmail blacklisted?")
+        .setDescription("Who should be blacklisted?")
         .setRequired(true)
     )
     .addStringOption((option) =>
@@ -52,7 +52,9 @@ module.exports = {
     );
 
     if (banned_user) {
-      return interaction.editReply({ content: `${target} is already banned!` });
+      return interaction.editReply({
+        content: `${target} is already blacklisted!`,
+      });
     }
 
     settings.banned_users.push({
@@ -64,11 +66,11 @@ module.exports = {
     await settings.save();
 
     interaction.editReply({
-      content: `Successfully banned ${target} for \`${reason}\``,
+      content: `Successfully blacklisted ${target} for \`${reason}\``,
     });
 
     const embed = new EmbedBuilder()
-      .setTitle("ModMail Ban")
+      .setTitle("ModMail Blacklist")
       .setFields(
         { name: "Moderator", value: `<@${interaction.user.id}>`, inline: true },
         { name: "Target", value: `<@${target.id}>`, inline: true },

@@ -68,7 +68,7 @@ module.exports = {
 
     const dm_content =
       interaction.options.getString("dm_message") ??
-      `Your ModMail message (ID: \`${userModmail}\`) has been resolved! Unfortunately we are unable to tell you the action taken!`;
+      `Your ModMail message (ID: \`${userModmail.modmail_id}\`) has been resolved! Unfortunately we are unable to tell you the action taken!`;
 
     const modmail_message = await modmail_channel.messages.fetch(
       userModmail.modmail_message_id
@@ -87,8 +87,7 @@ module.exports = {
 
     if (!thread) {
       return interaction.editReply({
-        content:
-          "There was an error with the modmail! Error code `4`, please send this to Mazurex!",
+        content: "Invalid ModMail ID, or the ModMail doesn't exist",
       });
     }
 
@@ -97,6 +96,18 @@ module.exports = {
       return interaction.editReply({
         content:
           "There was an error with the modmail! Error code `5`, please send this to Mazurex!",
+      });
+    }
+
+    const log_channel = interaction.guild.channels.cache.get(
+      settings.log_channel_id
+    );
+
+    if (!log_channel) {
+      return interaction.editReply({
+        content:
+          "There was an error with the modmail! Error code `2`, please send this to Mazurex!",
+        ephemeral: true,
       });
     }
 
@@ -162,5 +173,25 @@ module.exports = {
     }
 
     modmail.save();
+
+    const embed = new EmbedBuilder()
+      .setTitle("ModMail Resolve")
+      .setFields(
+        { name: "Resolver", value: `<@${interaction.user.id}>`, inline: true },
+        {
+          name: "ModMail ID",
+          value: `<@${userModmail.modmail_id}>`,
+          inline: true,
+        },
+        { name: "Reason", value: reason }
+      )
+      .setFooter({
+        text: "KasaiSora Universe ModMail",
+        iconURL: client.user.displayAvatarURL(),
+      })
+      .setColor("Blurple")
+      .setTimestamp();
+
+    log_channel.send({ embeds: [embed] });
   },
 };
