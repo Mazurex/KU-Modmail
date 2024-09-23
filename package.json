@@ -1,13 +1,13 @@
 {
   "name": "ku-modmail",
   "version": "1.0.0",
-  "description": "",
+  "description": "An advanced ModMail system made for the KasaiSora Universe Discord server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mazurex",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^14.16.2",
