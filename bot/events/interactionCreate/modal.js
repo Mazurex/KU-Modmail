@@ -46,7 +46,7 @@ module.exports = async (client, interaction) => {
     const dmEmbed = new EmbedBuilder()
       .setTitle("ModMail Sent")
       .setDescription(
-        `Your ModMail has been successfully sent!\nIf you need to followup, cancel, or modify your ModMail, DM a staff member with the ModMail ID below`
+        `Your ModMail has been successfully sent!\nIf you need to followup, cancel, or modify your ModMail, DM a staff member with the ModMail ID below.\nBelow there will also be another message with your ModMail contents!\nIf you need to add to your ModMail, or reply to a Moderator, use the \`/respond\` command!`
       )
       .addFields(
         { name: "ModMail ID", value: `${modmail_id}`, inline: true },
@@ -63,6 +63,9 @@ module.exports = async (client, interaction) => {
 
     try {
       member.send({ embeds: [dmEmbed] });
+      member.send({
+        content: `\`ModMail contents:\`\n\n\`\`\`${title}\`\`\`\n\`\`\`${content}\`\`\``,
+      });
     } catch (error) {}
 
     modmailChannel = interaction.guild.channels.cache.get(
@@ -96,7 +99,7 @@ module.exports = async (client, interaction) => {
     await modmailData.save();
 
     await interaction.reply({
-      content: "Your ModMail has been submitted!",
+      content: `Your ModMail has been submitted! You should have recieved a DM from the bot containing the information of your ModMail, if not, your ModMail ID is \`${modmail_id}\``,
       ephemeral: true,
     });
   } else if (interaction.customId === "another modal") {

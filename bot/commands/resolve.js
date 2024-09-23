@@ -140,6 +140,30 @@ module.exports = {
         ephemeral: true,
       });
       await thread.setArchived(true);
+
+      const embed = new EmbedBuilder()
+        .setTitle("ModMail Resolved")
+        .setFields(
+          {
+            name: "Resolver",
+            value: `<@${interaction.user.id}>`,
+            inline: true,
+          },
+          {
+            name: "ModMail ID",
+            value: `${userModmail.modmail_id}`,
+            inline: true,
+          },
+          { name: "Reason", value: reason }
+        )
+        .setFooter({
+          text: "KasaiSora Universe ModMail",
+          iconURL: client.user.displayAvatarURL(),
+        })
+        .setColor("Blurple")
+        .setTimestamp();
+
+      log_channel.send({ embeds: [embed] });
     } else {
       userModmail.resolved = false;
       await thread.setArchived(false);
@@ -170,28 +194,31 @@ module.exports = {
           content: `Your ModMail (ID: \`${userModmail.modmail_id}\`) has just been changed to unresolved by the staff team. This could be because your issue was accidentally closed or because we are working on a revision.`,
         });
       } catch (error) {}
+      const embed = new EmbedBuilder()
+        .setTitle("ModMail Unresolved")
+        .setFields(
+          {
+            name: "Resolver",
+            value: `<@${interaction.user.id}>`,
+            inline: true,
+          },
+          {
+            name: "ModMail ID",
+            value: `${userModmail.modmail_id}`,
+            inline: true,
+          },
+          { name: "Reason", value: reason }
+        )
+        .setFooter({
+          text: "KasaiSora Universe ModMail",
+          iconURL: client.user.displayAvatarURL(),
+        })
+        .setColor("Blurple")
+        .setTimestamp();
+
+      log_channel.send({ embeds: [embed] });
     }
 
     modmail.save();
-
-    const embed = new EmbedBuilder()
-      .setTitle("ModMail Resolve")
-      .setFields(
-        { name: "Resolver", value: `<@${interaction.user.id}>`, inline: true },
-        {
-          name: "ModMail ID",
-          value: `<@${userModmail.modmail_id}>`,
-          inline: true,
-        },
-        { name: "Reason", value: reason }
-      )
-      .setFooter({
-        text: "KasaiSora Universe ModMail",
-        iconURL: client.user.displayAvatarURL(),
-      })
-      .setColor("Blurple")
-      .setTimestamp();
-
-    log_channel.send({ embeds: [embed] });
   },
 };
