@@ -12,7 +12,7 @@ module.exports = {
     .addUserOption((option) =>
       option
         .setName("target")
-        .setDescription("Who should be modmail banned?")
+        .setDescription("Who's cooldown should be reset")
         .setRequired(true)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
@@ -24,7 +24,7 @@ module.exports = {
     if (!settings) {
       return interaction.editReply({
         content:
-          "There was an issue with fetching the database, create a modmail and try again!",
+          "There was an issue with fetching the database, create a modmail/forum and try again!",
       });
     }
 
@@ -35,7 +35,7 @@ module.exports = {
     if (!log_channel) {
       return interaction.editReply({
         content:
-          "There was an error with the modmail! Error code `2`, please send this to Mazurex!",
+          "There was an error with the modmail/forum! Error code `2`, please send this to Mazurex!",
         ephemeral: true,
       });
     }
@@ -46,7 +46,7 @@ module.exports = {
 
     if (!cooldown) {
       return interaction.editReply({
-        content: `${target} has not yet created a modmail!`,
+        content: `${target} has not yet created a modmail/forum!`,
         ephemeral: true,
       });
     }

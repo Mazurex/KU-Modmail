@@ -36,7 +36,7 @@ module.exports = {
       });
     }
 
-    const modmail_channel = interaction.guild.channels.cache.get(
+    const modmail_channel = await interaction.guild.channels.fetch(
       settings.modmail_channel_id
     );
 
@@ -57,9 +57,7 @@ module.exports = {
       });
     }
 
-    const thread = modmail_channel.threads.cache.find(
-      (thread) => thread.id === userModmail.thread_id
-    );
+    const thread = await modmail_channel.threads.fetch(userModmail.thread_id);
 
     if (!thread) {
       return interaction.editReply({
@@ -85,7 +83,7 @@ module.exports = {
         .permissions.has(PermissionFlagsBits.ModerateMembers)
     ) {
       const sendEmbed = new EmbedBuilder()
-        .setTitle(`(${interaction.guild.name} >> <@${userModmail.sender_id}>)`)
+        .setTitle(`(${interaction.guild.name} >> You)`)
         .setDescription(
           `A staff member is reaching out to you via ModMail, if you wish to respond, use the \`/respond\` command:\n\`\`\`${message}\`\`\``
         )

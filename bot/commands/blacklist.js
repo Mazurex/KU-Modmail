@@ -8,7 +8,7 @@ const Settings = require("../models/settings");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("blacklist")
-    .setDescription("Blacklist a user from the modmail system")
+    .setDescription("Blacklist a user from the bot")
     .addUserOption((option) =>
       option
         .setName("target")
@@ -31,7 +31,7 @@ module.exports = {
     if (!settings) {
       return interaction.editReply({
         content:
-          "There was an issue with fetching the database, create a modmail and try again!",
+          "There was an issue with fetching the database, create a modmail/forum and try again!",
       });
     }
 
