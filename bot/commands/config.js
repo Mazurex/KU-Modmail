@@ -43,33 +43,12 @@ module.exports = {
     }
 
     if (type == "modmail_channel_id") {
-      const channel = interaction.guild.channels.cache.get(value);
-      if (!channel && !channel.isTextBased() && channel.isThread())
-        return interaction.editReply({
-          content: `\`${value}\` is not a valid channel!`,
-        });
       settings.modmail_channel_id = value;
     } else if (type == "log_channel_id") {
-      const channel = interaction.guild.channels.cache.get(value);
-      if (!channel && !channel.isTextBased() && channel.isThread())
-        return interaction.editReply({
-          content: `\`${value}\` is not a valid channel!`,
-        });
       settings.log_channel_id = value;
     } else if (type == "forum_channel_id") {
-      const channel = interaction.guild.channels.cache.get(value);
-      if (!channel && !channel.type == ChannelType.GuildForum)
-        return interaction.editReply({
-          content: `\`${value}\` is not a valid channel!`,
-        });
       settings.forum_channel_id = value;
     } else if (type == "helper_role_id") {
-      const role = interaction.guild.roles.cache.get(value);
-      if (!role) {
-        return interaction.editReply({
-          content: `\`${value}\` is not a valid role!`,
-        });
-      }
       settings.helper_role_id = value;
     } else if (type == "cooldown") {
       if (value >= 0) {

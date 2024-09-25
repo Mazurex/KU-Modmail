@@ -21,11 +21,6 @@ module.exports = {
         )
         .setRequired(true)
     )
-    .addChannelOption((option) =>
-      option
-        .setName("target_channel")
-        .setDescription("What channel should the button be sent in")
-    )
     .addStringOption((option) =>
       option
         .setName("title")
@@ -46,8 +41,6 @@ module.exports = {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction, client) {
-    const channel =
-      interaction.options.getChannel("target_channel") ?? interaction.channel;
     await interaction.deferReply({ ephemeral: true });
 
     const title = interaction.options.getString("title");
@@ -92,7 +85,7 @@ module.exports = {
 
       interaction.channel.send({ embeds: [embed], components: [actionRow] });
       interaction.editReply({
-        content: `Successfully sent ModMail button in <#${channel.id}>!`,
+        content: `Successfully sent ModMail button in <#${interaction.channel.id}>!`,
       });
     } else if (type == "forum") {
       if (!title) {
@@ -130,7 +123,7 @@ module.exports = {
 
       interaction.channel.send({ embeds: [embed], components: [actionRow] });
       interaction.editReply({
-        content: `Successfully sent Forum button in <#${channel.id}>!`,
+        content: `Successfully sent Forum button in <#${interaction.channel.id}>!`,
       });
     }
   },

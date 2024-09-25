@@ -74,6 +74,12 @@ module.exports = {
       });
     }
 
+    if (userModmail.resolved == true) {
+      return interaction.editReply({
+        content: "This ModMail has already been resolved!",
+      });
+    }
+
     if (
       interaction.guild.members.cache
         .get(interaction.user.id)

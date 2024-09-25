@@ -173,7 +173,7 @@ module.exports = async (client, interaction) => {
     }
 
     const userForum = settings.user_forums.find(
-      (user) => user.post_id == interaction.channel.id
+      (user) => user.user_id == interaction.user.id
     );
 
     if (userForum) {
@@ -190,6 +190,11 @@ module.exports = async (client, interaction) => {
           ephemeral: true,
         });
       }
+    } else {
+      return interaction.reply({
+        content: "There was an issue with the database!",
+        ephemeral: true,
+      });
     }
 
     if (userForum) {
