@@ -19,7 +19,8 @@ module.exports = {
           { name: "Logging Channel ID", value: "log_channel_id" },
           { name: "Forum Channel ID", value: "forum_channel_id" },
           { name: "Helper Role ID", value: "helper_role_id" },
-          { name: "Cooldown in Sec", value: "cooldown" }
+          { name: "Modmail Cooldown in Sec", value: "modmail_cooldown" },
+          { name: "Forums Cooldown in Sec", value: "forums_cooldown" }
         )
     )
     .addStringOption((option) =>
@@ -50,9 +51,17 @@ module.exports = {
       settings.forum_channel_id = value;
     } else if (type == "helper_role_id") {
       settings.helper_role_id = value;
-    } else if (type == "cooldown") {
+    } else if (type == "modmail_cooldown") {
       if (value >= 0) {
-        settings.cooldown_s = value;
+        settings.modmail_cooldown_s = value;
+      } else {
+        return interaction.editReply({
+          content: "The cooldown cannot be less than 0 seconds!",
+        });
+      }
+    } else if (type == "forum_cooldown") {
+      if (value >= 0) {
+        settings.forum_cooldown_s = value;
       } else {
         return interaction.editReply({
           content: "The cooldown cannot be less than 0 seconds!",

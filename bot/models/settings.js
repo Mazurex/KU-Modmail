@@ -5,7 +5,8 @@ const settingsSchema = new mongoose.Schema({
   forum_channel_id: { type: String },
   log_channel_id: { type: String },
   helper_role_id: { type: String },
-  cooldown_s: { type: Number, default: 3600, required: true },
+  modmail_cooldown_s: { type: Number, default: 3600, required: true },
+  forum_cooldown_s: { type: Number, default: 3600, required: true },
   user_modmails: [
     {
       user_id: { type: String, required: true },
