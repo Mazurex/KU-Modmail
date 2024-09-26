@@ -5,9 +5,9 @@ const forumSchema = new mongoose.Schema({
   forums: [
     {
       forum_id: { type: Number, unique: true },
-      sender_id: { type: String, required: true },
-      root_channel_id: { type: String, required: true },
-      timestamp: { type: Date, default: Date.now(), required: true },
+      sender_id: { type: String },
+      root_channel_id: { type: String },
+      timestamp: { type: Date, default: Date.now() },
       resolved: { type: Boolean, default: false },
       post_id: { type: String },
     },

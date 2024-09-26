@@ -4,13 +4,13 @@ const modmailSchema = new mongoose.Schema({
   index: { type: Number, default: 0 },
   modmails: [
     {
-      modmail_id: { type: Number, unique: true, required: true },
-      sender_id: { type: String, required: true },
-      root_channel_id: { type: String, required: true },
-      modmail_message_id: { type: String, required: true },
-      timestamp: { type: Date, default: Date.now(), required: true },
+      modmail_id: { type: Number, unique: true },
+      sender_id: { type: String },
+      root_channel_id: { type: String },
+      modmail_message_id: { type: String },
+      timestamp: { type: Date, default: Date.now() },
       resolved: { type: Boolean, default: false },
-      thread_id: { type: String, required: true },
+      thread_id: { type: String },
     },
   ],
 });

@@ -5,24 +5,22 @@ const settingsSchema = new mongoose.Schema({
   forum_channel_id: { type: String },
   log_channel_id: { type: String },
   helper_role_id: { type: String },
-  modmail_cooldown_s: { type: Number, default: 3600, required: true },
-  forum_cooldown_s: { type: Number, default: 3600, required: true },
+  modmail_cooldown_s: { type: Number, default: 3600 },
+  forum_cooldown_s: { type: Number, default: 3600 },
   user_modmails: [
     {
-      user_id: { type: String, required: true },
+      user_id: { type: String },
       last_modmail_timestamp: {
         type: Date,
-        required: true,
         timestamp: Date.now(),
       },
     },
   ],
   user_forums: [
     {
-      user_id: { type: String, required: true },
+      user_id: { type: String },
       last_forum_timestamp: {
         type: Date,
-        required: true,
         timestamp: Date.now(),
       },
     },
