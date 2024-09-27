@@ -8,6 +8,7 @@ const {
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
+const Stats = require("./models/stats");
 
 const eventsDir = path.join(__dirname, "events");
 const commandsDir = path.join(__dirname, "commands");
@@ -109,6 +110,19 @@ client.on("interactionCreate", async (interaction) => {
 
   try {
     await command.execute(interaction, client);
+
+    console.log(
+      `${interaction.user.username} has used the ${interaction.commandName} command`
+    );
+
+    const stats = await Stats.findOne();
+    if (!stats) {
+      console.log("Stats database not found!");
+    } else {
+      stats.commands_executed_last_startup += 1;
+      stats.total_commands += 1;
+      await stats.save();
+    }
   } catch (error) {
     console.error(error);
 

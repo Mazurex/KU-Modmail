@@ -38,6 +38,7 @@ module.exports = async (client, interaction) => {
     if (bannedUser) {
       return interaction.reply({
         content: `You are banned from using the bot. Reason: \`${bannedUser.reason}\``,
+        ephemeral: true,
       });
     }
 
@@ -147,6 +148,7 @@ module.exports = async (client, interaction) => {
     if (bannedUser) {
       return interaction.reply({
         content: `You are banned from using the bot. Reason: \`${bannedUser.reason}\``,
+        ephemeral: true,
       });
     }
 
@@ -188,7 +190,7 @@ module.exports = async (client, interaction) => {
           (currentTime.getTime() + (cooldown - timeSinceLastForum)) / 1000
         );
         return interaction.reply({
-          content: `You can send a ModMail again <t:${cooldownEndTimestamp}:R>`,
+          content: `You can send a Forum again <t:${cooldownEndTimestamp}:R>`,
           ephemeral: true,
         });
       }
