@@ -48,15 +48,24 @@ module.exports = {
       (user) => user.user_id === target.id
     );
 
-    if (!cooldown || !forum) {
-      return interaction.editReply({
+    if (!cooldown && !forum) {
+      interaction.editReply({
         content: `${target} has not yet created a modmail/forum!`,
         ephemeral: true,
       });
     }
 
-    cooldown.deleteOne();
-    forum.deleteOne();
+    const currentDate = new Date();
+    let pastDate = new Date();
+    pastDate.setDate(currentDate.getDate() - 7);
+
+    if (cooldown) {
+      cooldown.last_modmail_timestamp = pastDate;
+    }
+    if (forum) {
+      forum.last_forum_timestamp = pastDate;
+    }
+
     await settings.save();
 
     interaction.editReply({

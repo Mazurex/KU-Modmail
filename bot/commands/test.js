@@ -11,10 +11,7 @@ module.exports = {
     .setDescription("Testing command to show some basic bot stats")
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
   async execute(interaction, client) {
-    const deferred = await interaction.deferReply({
-      ephemeral: true,
-      fetchReply: true,
-    });
+    const deferred = await interaction.deferReply({ fetchReply: true });
     const stats = await Stats.findOne();
     if (!stats) {
       console.log("Stats database not found!");

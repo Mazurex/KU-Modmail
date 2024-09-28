@@ -62,6 +62,8 @@ module.exports = async (client, interaction) => {
       });
     }
 
+    await settings.save();
+
     const dmEmbed = new EmbedBuilder()
       .setTitle("ModMail Sent")
       .setDescription(
