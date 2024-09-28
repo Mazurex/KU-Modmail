@@ -78,15 +78,6 @@ module.exports = async (client, interaction) => {
       .setColor("Blurple")
       .setTimestamp();
 
-    const member = interaction.guild.members.cache.get(interaction.user.id);
-
-    try {
-      member.send({ embeds: [dmEmbed] });
-      member.send({
-        content: `\`ModMail contents:\`\n\n\`\`\`${title}\`\`\`\n\`\`\`${content}\`\`\``,
-      });
-    } catch (error) {}
-
     modmailChannel = interaction.guild.channels.cache.get(
       settings.modmail_channel_id
     );
@@ -121,6 +112,8 @@ module.exports = async (client, interaction) => {
       content: `Your ModMail has been submitted! You should have recieved a DM from the bot containing the information of your ModMail, if not, your ModMail ID is \`${modmail_id}\``,
       ephemeral: true,
     });
+
+    console.log(`Modmail with id ${modmail_id} has been created`);
   } else if (interaction.customId === "forum") {
     /////////////////////////////////////////////////////////////////////////////////////
     const title = interaction.fields.getTextInputValue("title");
@@ -212,13 +205,6 @@ module.exports = async (client, interaction) => {
       .setColor("Blurple")
       .setTimestamp();
 
-    try {
-      member.send({ embeds: [dmEmbed] });
-      member.send({
-        content: `\`\`\`Title: ${title}\nVersion: ${version}\nLogs: ${logs}\nSpark: ${spark}\`\`\`\n\n\`\`\`${description}\`\`\``,
-      });
-    } catch (error) {}
-
     forumData.forums.push({
       forum_id: forum_id,
       sender_id: interaction.user.id,
@@ -235,5 +221,7 @@ module.exports = async (client, interaction) => {
       content: `Your Forum Support Post has been created at <#${post.id}>! You should have recieved a DM from the bot containing the information of your Post, if not, your Post ID is \`${forum_id}\``,
       ephemeral: true,
     });
+
+    console.log(`Forum post with id ${forum_id} has been created`);
   }
 };

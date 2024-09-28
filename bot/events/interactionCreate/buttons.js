@@ -363,16 +363,6 @@ module.exports = async (client, interaction) => {
         );
 
         logChannel.send({ embeds: [logEmbed] });
-
-        const postOwner = interaction.guild.members.cache.get(
-          userForum.sender_id
-        );
-
-        try {
-          postOwner.send({
-            content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
-          });
-        } catch (error) {}
       });
 
       collector.on("end", () => {

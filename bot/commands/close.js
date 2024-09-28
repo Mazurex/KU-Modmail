@@ -133,11 +133,11 @@ module.exports = {
           userForum.sender_id
         );
 
-        try {
-          ownerMember.send({
-            content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
-          });
-        } catch (error) {}
+        // try {
+        //   ownerMember.send({
+        //     content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
+        //   });
+        // } catch (error) {}
       });
 
       collector.on("end", () => {

@@ -100,11 +100,11 @@ module.exports = {
         .setColor("Green")
         .setTimestamp();
 
-      try {
-        member.send({ embeds: [sendEmbed] });
-      } catch (error) {
-        interaction.editReply({ content: "This user is not accepting DM's!" });
-      }
+      // try {
+      //   member.send({ embeds: [sendEmbed] });
+      // } catch (error) {
+      //   interaction.editReply({ content: "This user is not accepting DM's!" });
+      // }
 
       const logEmbed = new EmbedBuilder()
         .setTitle(

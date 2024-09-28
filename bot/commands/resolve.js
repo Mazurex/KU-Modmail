@@ -131,9 +131,9 @@ module.exports = {
         .setTimestamp();
       thread.send({ embeds: [resolvedEmbed] });
 
-      try {
-        member.send(dm_content);
-      } catch (error) {}
+      // try {
+      //   member.send(dm_content);
+      // } catch (error) {}
 
       interaction.editReply({
         content: "This ticket has now been resolved!",
@@ -189,11 +189,11 @@ module.exports = {
         ephemeral: true,
       });
 
-      try {
-        member.send({
-          content: `Your ModMail (ID: \`${userModmail.modmail_id}\`) has just been changed to unresolved by the staff team. This could be because your issue was accidentally closed or because we are working on a revision.`,
-        });
-      } catch (error) {}
+      // try {
+      //   member.send({
+      //     content: `Your ModMail (ID: \`${userModmail.modmail_id}\`) has just been changed to unresolved by the staff team. This could be because your issue was accidentally closed or because we are working on a revision.`,
+      //   });
+      // } catch (error) {}
       const embed = new EmbedBuilder()
         .setTitle("ModMail Unresolved")
         .setFields(
