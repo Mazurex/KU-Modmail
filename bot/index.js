@@ -138,15 +138,9 @@ client.once("ready", () => {
   const rest = new REST({ version: "10" }).setToken(process.env.token);
 
   rest
-    .put(
-      Routes.applicationGuildCommands(
-        process.env.client_id,
-        process.env.guild_id
-      ),
-      {
-        body: commands,
-      }
-    )
+    .put(Routes.applicationCommands(process.env.client_id), {
+      body: commands,
+    })
     .then(() => {
       if (commands.length === 0) {
         console.log("No commands found. Skipping registration.");
