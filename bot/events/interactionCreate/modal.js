@@ -14,6 +14,8 @@ const Settings = require("../../models/settings");
 module.exports = async (client, interaction) => {
   if (!interaction.isModalSubmit()) return;
 
+  const currentTime = new Date();
+
   if (interaction.customId === "modmail") {
     const title = interaction.fields.getTextInputValue("title");
     const content = interaction.fields.getTextInputValue("content");
@@ -45,7 +47,20 @@ module.exports = async (client, interaction) => {
       .setColor("Blurple")
       .setTimestamp();
 
-    const settings = await Settings.findOne();
+    let settings = await Settings.findOne();
+
+    const userModmail = settings.user_modmails.find(
+      (user) => user.user_id === interaction.user.id
+    );
+
+    if (userModmail) {
+      userModmail.last_modmail_timestamp = currentTime; // Update timestamp
+    } else {
+      settings.user_modmails.push({
+        user_id: interaction.user.id,
+        last_modmail_timestamp: currentTime, // Set new timestamp
+      });
+    }
 
     const dmEmbed = new EmbedBuilder()
       .setTitle("ModMail Sent")
@@ -127,7 +142,24 @@ module.exports = async (client, interaction) => {
 
     const forum_id = forumData.index + 1;
     await forumData.save();
-    const settings = await Settings.findOne();
+
+    let settings = await Settings.findOne();
+
+    const userForum = settings.user_forums.find(
+      (user) => user.user_id === interaction.user.id
+    );
+
+    if (userForum) {
+      userForum.last_forum_timestamp = currentTime; // Update timestamp
+    } else {
+      settings.user_forums.push({
+        user_id: interaction.user.id,
+        last_forum_timestamp: currentTime, // Set new timestamp
+      });
+    }
+
+    await settings.save();
+
     const member = interaction.guild.members.cache.get(interaction.user.id);
     const forumChannel = interaction.guild.channels.cache.get(
       settings.forum_channel_id

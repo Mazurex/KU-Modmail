@@ -12,7 +12,7 @@ const Forum = require("../models/forum");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("close")
+    .setName("close_forum")
     .setDescription("Close a Forum Post")
     .addIntegerOption((option) =>
       option
@@ -138,24 +138,15 @@ module.exports = {
             content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
           });
         } catch (error) {}
-
-        try {
-          interaction.editReply({
-            content: `You have closed post \`${userForum.forum_id}\`!`,
-            embeds: [],
-            components: [],
-          });
-        } catch (error) {}
       });
 
       collector.on("end", () => {
-        try {
-          interaction.editReply({
-            content: "This button has expired!",
-            embeds: [],
-            components: [],
-          });
-        } catch (error) {}
+        if (!interaction.guild.channels.cache.get(userForum.post_id)) return;
+        interaction.editReply({
+          content: "This button has expired!",
+          embeds: [],
+          components: [],
+        });
       });
     } else {
       interaction.editReply({

@@ -44,7 +44,11 @@ module.exports = {
       (user) => user.user_id === target.id
     );
 
-    if (!cooldown) {
+    const forum = settings.user_forums.find(
+      (user) => user.user_id === target.id
+    );
+
+    if (!cooldown || !forum) {
       return interaction.editReply({
         content: `${target} has not yet created a modmail/forum!`,
         ephemeral: true,
@@ -52,14 +56,15 @@ module.exports = {
     }
 
     cooldown.deleteOne();
+    forum.deleteOne();
     await settings.save();
 
     interaction.editReply({
-      content: `Successfully reset cooldown for ${target}`,
+      content: `Successfully reset cooldowns for ${target}`,
     });
 
     const embed = new EmbedBuilder()
-      .setTitle("ModMail Cooldown Reset")
+      .setTitle("ModMail and Forum Cooldown Reset")
       .setFields(
         { name: "Moderator", value: `<@${interaction.user.id}>`, inline: true },
         { name: "Target", value: `<@${target.id}>`, inline: true }

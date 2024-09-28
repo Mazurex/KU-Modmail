@@ -86,14 +86,14 @@ module.exports = async (client, interaction) => {
       }
     }
 
-    if (userModmail) {
-      userModmail.last_modmail_timestamp = currentTime;
-    } else {
-      settings.user_modmails.push({
-        user_id: interaction.user.id,
-        last_modmail_timestamp: currentTime,
-      });
-    }
+    // if (userModmail) {
+    //   userModmail.last_modmail_timestamp = currentTime;
+    // } else {
+    //   settings.user_modmails.push({
+    //     user_id: interaction.user.id,
+    //     last_modmail_timestamp: currentTime,
+    //   });
+    // }
 
     await settings.save();
 
@@ -196,16 +196,16 @@ module.exports = async (client, interaction) => {
       }
     }
 
-    if (userForum) {
-      userForum.last_forum_timestamp = currentTime;
-    } else {
-      settings.user_forums.push({
-        user_id: interaction.user.id,
-        last_forum_timestamp: currentTime,
-      });
-    }
+    // if (userForum) {
+    //   userForum.last_forum_timestamp = currentTime;
+    // } else {
+    //   settings.user_forums.push({
+    //     user_id: interaction.user.id,
+    //     last_forum_timestamp: currentTime,
+    //   });
+    // }
 
-    await settings.save();
+    // await settings.save();
 
     const modal = new ModalBuilder()
       .setCustomId("forum")

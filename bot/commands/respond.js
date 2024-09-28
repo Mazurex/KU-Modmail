@@ -89,7 +89,7 @@ module.exports = {
         .permissions.has(PermissionFlagsBits.ModerateMembers)
     ) {
       const sendEmbed = new EmbedBuilder()
-        .setTitle(`(${interaction.guild.name} >> You)`)
+        .setTitle(`(${interaction.guild.name} has sent a message to You)`)
         .setDescription(
           `A staff member is reaching out to you via ModMail, if you wish to respond, use the \`/respond\` command:\n\`\`\`${message}\`\`\``
         )
@@ -127,7 +127,7 @@ module.exports = {
       if (interaction.user.id == userModmail.sender_id) {
         const sendEmbed = new EmbedBuilder()
           .setTitle(
-            `(${interaction.user.username} >> ${interaction.guild.name})`
+            `ModMail owner has sent a message to ${interaction.guild.name}`
           )
           .setDescription(
             `A member has sent a response to this ModMail:\n\`\`\`${message}\`\`\``

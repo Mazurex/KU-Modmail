@@ -9,7 +9,7 @@ const Modmail = require("../models/modmail");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("resolve")
+    .setName("resolve_modmail")
     .setDescription("Resolve a ModMail")
     .addIntegerOption((option) =>
       option
@@ -91,7 +91,7 @@ module.exports = {
       });
     }
 
-    const member = interaction.guild.members.cache.get(userModmail.sender_id);
+    const member = await interaction.guild.members.fetch(userModmail.sender_id);
     if (!member) {
       return interaction.editReply({
         content:
