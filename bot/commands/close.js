@@ -92,7 +92,7 @@ module.exports = {
         time: 60_000,
       });
 
-      collector.on("collect", () => {
+      collector.on("collect", async () => {
         const postChannel = interaction.guild.channels.cache.get(
           userForum.post_id
         );
@@ -133,11 +133,11 @@ module.exports = {
           userForum.sender_id
         );
 
-        // try {
-        //   ownerMember.send({
-        //     content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
-        //   });
-        // } catch (error) {}
+        try {
+          await ownerMember.send({
+            content: `Your post (ID: \`${userForum.forum_id}\`) has been closed, if this was unexpected, ask a staff member! Reason:\n\n\`\`\`${reason}\`\`\``,
+          });
+        } catch (error) {}
       });
 
       collector.on("end", () => {

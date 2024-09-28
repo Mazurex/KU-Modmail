@@ -153,4 +153,19 @@ client.once("ready", () => {
     });
 });
 
+client.on("error", (error) => {
+  console.error(error);
+  console.log(error.stack);
+});
+
+process.on("unhandledRejection", (error) => {
+  console.error(error);
+  console.log(error.stack);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error(error);
+  console.log(error.stack);
+});
+
 client.login(process.env.token);
