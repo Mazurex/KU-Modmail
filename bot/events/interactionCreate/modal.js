@@ -172,7 +172,7 @@ module.exports = async (client, interaction) => {
     const post = await forumChannel.threads.create({
       name: title,
       message: {
-        content: `\`Forum Post by ${interaction.user.username}\`\n\nPost ID: ${forum_id}\nVersion: ${version}\nLogs: ${logs}\nSpark: ${spark}\n\n\`\`\`${description}\`\`\``,
+        content: `\`Forum Post by\` <@${interaction.user.id}>\n\nPost ID: ${forum_id}\nVersion: ${version}\nLogs: ${logs}\nSpark: ${spark}\n\n\`\`\`${description}\`\`\``,
       },
       // appliedTags: [""],
     });
