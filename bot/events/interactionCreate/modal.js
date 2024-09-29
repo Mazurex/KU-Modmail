@@ -17,6 +17,7 @@ module.exports = async (client, interaction) => {
   const currentTime = new Date();
 
   if (interaction.customId === "modmail") {
+    await interaction.deferReply({ ephemeral: true });
     const title = interaction.fields.getTextInputValue("title");
     const content = interaction.fields.getTextInputValue("content");
 
@@ -119,12 +120,13 @@ module.exports = async (client, interaction) => {
     modmailData.index = modmail_id;
     await modmailData.save();
 
-    await interaction.reply({
+    await interaction.editReply({
       content: `Your ModMail has been submitted! You should have recieved a DM from the bot containing the information of your ModMail, if not, your ModMail ID is \`${modmail_id}\``,
       ephemeral: true,
     });
   } else if (interaction.customId === "forum") {
     /////////////////////////////////////////////////////////////////////////////////////
+    await interaction.deferReply({ ephemeral: true });
     const title = interaction.fields.getTextInputValue("title");
     const version = interaction.fields.getTextInputValue("version");
     const logs =
@@ -170,7 +172,7 @@ module.exports = async (client, interaction) => {
     const post = await forumChannel.threads.create({
       name: title,
       message: {
-        content: `\`Forum Post by ${interaction.user.username}\`\n\n\`\`\`Post ID: ${forum_id}\nVersion: ${version}\nLogs: ${logs}\nSpark: ${spark}\`\`\`\n\n\`\`\`${description}\`\`\``,
+        content: `\`Forum Post by ${interaction.user.username}\`\n\nPost ID: ${forum_id}\nVersion: ${version}\nLogs: ${logs}\nSpark: ${spark}\n\n\`\`\`${description}\`\`\``,
       },
       // appliedTags: [""],
     });
@@ -233,7 +235,7 @@ module.exports = async (client, interaction) => {
     forumData.index = forum_id;
     await forumData.save();
 
-    await interaction.reply({
+    await interaction.editReply({
       content: `Your Forum Support Post has been created at <#${post.id}>! You should have recieved a DM from the bot containing the information of your Post, if not, your Post ID is \`${forum_id}\``,
       ephemeral: true,
     });

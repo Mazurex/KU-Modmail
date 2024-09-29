@@ -207,6 +207,11 @@ module.exports = {
             value: `${userModmail.modmail_id}`,
             inline: true,
           },
+          {
+            name: "Modmail Thread",
+            value: `<#${userModmail.thread_id}>`,
+            inline: true,
+          },
           { name: "Reason", value: reason }
         )
         .setFooter({
