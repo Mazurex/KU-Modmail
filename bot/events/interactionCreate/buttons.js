@@ -213,34 +213,36 @@ module.exports = async (client, interaction) => {
 
     const title = new TextInputBuilder()
       .setCustomId("title")
-      .setLabel("A BRIEF OVERVIEW OF YOUR PROBLEM")
+      .setLabel("Summarize your problem in a few words")
       .setStyle(TextInputStyle.Short)
+      .setPlaceholder("This will be your Post title")
       .setMaxLength(64)
       .setRequired(true);
     const version = new TextInputBuilder()
       .setCustomId("version")
-      .setLabel("PROVIDE THE OUTPUT OF RUNNING /VERSION")
+      .setLabel("Version, for server, type /version in-game")
       .setStyle(TextInputStyle.Short)
       .setMaxLength(69)
       .setRequired(true);
     const logs = new TextInputBuilder()
       .setCustomId("logs")
-      .setLabel("PLEASE SHARE YOUR MCLO.GS LOG FILE")
+      .setLabel("Upload logs to mclo.gs and link them here")
       .setPlaceholder("https://mclo.gs/S1gMa")
       .setStyle(TextInputStyle.Short)
       .setMaxLength(69)
       .setRequired(false);
     const spark = new TextInputBuilder()
       .setCustomId("spark")
-      .setLabel("PLEASE SHARE YOUR SPARK PROFILER REPORT")
+      .setLabel("Link your spark profiler report here")
       .setPlaceholder("https://spark.lucko.me/SUsSy0BaKA")
       .setStyle(TextInputStyle.Short)
       .setMaxLength(69)
       .setRequired(false);
     const description = new TextInputBuilder()
       .setCustomId("description")
-      .setLabel("A DETAILED DESCRIPTION OF YOUR PROBLEM")
+      .setLabel("A detailed explanation of your problem")
       .setStyle(TextInputStyle.Paragraph)
+      .setMinLength(125)
       .setMaxLength(2100)
       .setRequired(true);
 
