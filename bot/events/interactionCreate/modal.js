@@ -124,6 +124,10 @@ module.exports = async (client, interaction) => {
       content: `Your ModMail has been submitted! You should have recieved a DM from the bot containing the information of your ModMail, if not, your ModMail ID is \`${modmail_id}\``,
       ephemeral: true,
     });
+
+    console.log(
+      `${interaction.user.username} has created a modmail "${modmail_id}"`
+    );
   } else if (interaction.customId === "forum") {
     /////////////////////////////////////////////////////////////////////////////////////
     await interaction.deferReply({ ephemeral: true });
@@ -239,5 +243,9 @@ module.exports = async (client, interaction) => {
       content: `Your Forum Support Post has been created at <#${post.id}>! You should have recieved a DM from the bot containing the information of your Post, if not, your Post ID is \`${forum_id}\``,
       ephemeral: true,
     });
+
+    console.log(
+      `${interaction.user.username} has created a forum "${forum_id}"`
+    );
   }
 };
