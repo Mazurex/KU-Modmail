@@ -147,10 +147,6 @@ client.once("ready", () => {
         body: commands,
       }
     )
-    // rest
-    //   .put(Routes.applicationCommands(process.env.client_id), {
-    //     body: commands,
-    //   })
     .then(() => {
       if (commands.length === 0) {
         console.log("No commands found. Skipping registration.");
