@@ -6,7 +6,7 @@ module.exports = async (client, message) => {
     const settings = await Settings.findOne();
     if (!settings) return console.log("Settings DB not found");
 
-    const logChannel = newMember.guild.channels.cache.get(
+    const logChannel = newMessage.guild.channels.cache.get(
       settings.auto_log_channel_id
     );
 
