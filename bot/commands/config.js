@@ -17,6 +17,7 @@ module.exports = {
         .addChoices(
           { name: "Modmail Channel ID", value: "modmail_channel_id" },
           { name: "Logging Channel ID", value: "log_channel_id" },
+          { name: "Auto Logging Channel ID", value: "auto_log_channel_id" },
           { name: "Forum Channel ID", value: "forum_channel_id" },
           { name: "Helper Role ID", value: "helper_role_id" },
           { name: "Modmail Cooldown in Sec", value: "modmail_cooldown" },
@@ -47,6 +48,8 @@ module.exports = {
       settings.modmail_channel_id = value;
     } else if (type == "log_channel_id") {
       settings.log_channel_id = value;
+    } else if (type == "auto_log_channel_id") {
+      settings.auto_log_channel_id = value;
     } else if (type == "forum_channel_id") {
       settings.forum_channel_id = value;
     } else if (type == "helper_role_id") {

@@ -13,6 +13,7 @@ module.exports = async (client) => {
     settings = new Settings({
       modmail_channel_id: 0,
       log_channel_id: 0,
+      auto_log_channel_id: 0,
       modmail_cooldown_s: 3600,
       forum_cooldown_s: 3600,
       user_modmails: [],

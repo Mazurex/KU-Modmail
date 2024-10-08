@@ -4,6 +4,7 @@ const {
   REST,
   Routes,
   Collection,
+  Partials,
 } = require("discord.js");
 const path = require("path");
 const fs = require("fs");
@@ -22,6 +23,7 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
   ],
+  partials: [Partials.Message, Partials.User, Partials.GuildMember],
 });
 
 (async () => {
